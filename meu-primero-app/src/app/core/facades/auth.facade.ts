@@ -1,0 +1,43 @@
+import { Injectable, inject } from '@angular/core';
+
+import { AuthService } from '../services/auth.service';
+
+@Injectable({
+    providedIn: 'root',
+})
+export class AuthFacade {
+    // A facade centraliza o acesso da aplicação à autenticação.
+    // Componentes, guards e header passam a usar esta camada simplificada.
+    private authService = inject(AuthService);
+
+    // Sinais de autenticação expostos para leitura.
+    usuarioAtual = this.authService.usuarioAtual;
+    estaLogado = this.authService.estaLogado;
+    ehAdmin = this.authService.ehAdmin;
+    token = this.authService.token;
+
+    // Ação de alto nível para login (agora assíncrona: fala com a API).
+    realizarLogin(email: string, senha: string) {
+        return this.authService.login(email, senha);
+    }
+
+    // Ação de alto nível para criar uma conta.
+    criarConta(email: string, senha: string) {
+        return this.authService.registrar(email, senha);
+    }
+
+    // Ação de alto nível para logout.
+    sair() {
+        this.authService.logout();
+    }
+
+    // Método mantido para integrações técnicas, como interceptor HTTP.
+    obterToken(): string | null {
+        return this.authService.obterToken();
+    }
+
+    // Método de leitura do perfil atual.
+    obterPerfil() {
+        return this.authService.obterPerfil();
+    }
+}

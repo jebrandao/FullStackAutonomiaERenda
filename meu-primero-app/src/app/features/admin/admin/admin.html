@@ -1,0 +1,89 @@
+<section class="painel-admin">
+  <h2>Área Administrativa</h2>
+  <p>Esta página representa uma área restrita da aplicação.</p>
+  <p>Somente usuários com perfil de administrador conseguem acessar esta rota.</p>
+
+  <hr />
+  <section class="bloco-admin">
+    <h3>Usuário autenticado</h3>
+
+    @if (usuarioAtual()) {
+      <p><strong>E-mail:</strong> {{ usuarioAtual()?.email }}</p>
+      <p><strong>Perfil:</strong> {{ usuarioAtual()?.perfil }}</p>
+      <p>{{ mensagemPerfil() }}</p>
+    }
+  </section>
+
+  <hr />
+  <section class="cards-admin">
+    <article>
+      <h3>Produtos cadastrados</h3>
+      <p>{{ totalProdutosCadastrados() }}</p>
+    </article>
+    <article>
+      <h3>Pedidos pendentes</h3>
+      <p>{{ pedidosPendentes() }}</p>
+    </article>
+    <article>
+      <h3>Usuários cadastrados</h3>
+      <p>{{ usuariosCadastrados() }}</p>
+    </article>
+  </section>
+
+  <hr />
+
+  <section class="bloco-admin">
+    <h3>{{ editandoId() ? 'Editar produto' : 'Cadastrar produto' }}</h3>
+
+    @if (mensagem()) {
+      <p class="texto-sucesso">{{ mensagem() }}</p>
+    }
+    @if (erro()) {
+      <p class="texto-erro">{{ erro() }}</p>
+    }
+
+    <form [formGroup]="formulario" (ngSubmit)="salvar()" class="form-produto">
+      <input type="text" formControlName="nome" placeholder="Nome" />
+      <input type="number" formControlName="preco" placeholder="Preço" step="0.01" />
+      <input type="text" formControlName="descricao" placeholder="Descrição" />
+      <input type="number" formControlName="estoque" placeholder="Estoque" />
+
+      <button type="submit">{{ editandoId() ? 'Salvar alterações' : 'Cadastrar' }}</button>
+      @if (editandoId()) {
+        <button type="button" (click)="cancelarEdicao()">Cancelar</button>
+      }
+    </form>
+  </section>
+
+  <section class="bloco-admin">
+    <h3>Produtos no banco de dados</h3>
+
+    <table class="tabela-produtos">
+      <thead>
+        <tr>
+          <th>Nome</th>
+          <th>Preço</th>
+          <th>Estoque</th>
+          <th>Ações</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (produto of produtos(); track produto._id) {
+          <tr>
+            <td>{{ produto.nome }}</td>
+            <td>R$ {{ produto.preco.toFixed(2) }}</td>
+            <td>{{ produto.estoque }}</td>
+            <td>
+              <button type="button" (click)="editar(produto)">Editar</button>
+              <button type="button" (click)="excluir(produto)">Excluir</button>
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </section>
+
+  <hr />
+
+  <button type="button" (click)="sair()">Sair da conta administrativa</button>
+</section>

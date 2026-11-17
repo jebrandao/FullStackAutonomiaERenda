@@ -1,0 +1,72 @@
+.painel-admin {
+  max-width: 900px;
+}
+
+.bloco-admin {
+  margin: 16px 0;
+}
+
+.cards-admin {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+  margin: 16px 0;
+}
+
+.cards-admin article {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 16px;
+}
+
+.cards-admin h3 {
+  margin-top: 0;
+}
+
+.cards-admin p {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+button {
+  margin-right: 8px;
+  margin-top: 8px;
+  padding: 8px 16px;
+}
+
+@media (min-width: 700px) {
+  .cards-admin {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.form-produto {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+
+.form-produto input {
+  padding: 8px;
+}
+
+.tabela-produtos {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.tabela-produtos th,
+.tabela-produtos td {
+  border-bottom: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+.texto-sucesso {
+  color: green;
+}
+
+.texto-erro {
+  color: red;
+}
